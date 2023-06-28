@@ -13,7 +13,9 @@ keys_to_extract = ['danceability', 'energy', 'loudness', 'mode', 'speechiness', 
 
 
 rolling_stones_albums = [
-    {'name': 'Hex', 'year':1994}]
+    {'name': 'Landwerk No. 2', 'year':2020},
+    {'name': '7G', 'year':2020},
+    {'name': 'Heaven or Las Vegas', 'year':2020}]
 
 
 new_rows = bulk_entry(rolling_stones_albums, keys_to_extract)
