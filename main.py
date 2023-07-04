@@ -13,7 +13,7 @@ album_input = [
     {"name": "Sunbather", "year": 2013},
 ]
 
-
+# TO DO: MAKE IT EASIER TO RUN THIS WITHOUT DOING A LIST OF DICTIONARIES IF POSSIBLE? TOO USER UNFRIENDLY + HARD TO RUN WITH ARGPARSER.
 # Note for your own purposes, you would have to put in your own CLIENT_ID and CLIENT_SECRET.
 # To Do: Look into using global variables or whatever they're called to call these without showing the world
 # my client secret/id.
