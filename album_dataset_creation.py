@@ -1,6 +1,5 @@
-import numpy as np
-import spotipy
 import os
+import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
 from collections import defaultdict
@@ -18,6 +17,19 @@ These are functions I've created to interact with the Spotify API to average tra
 I can perform ALBUM recommendation, rather than track recommendation. Averaging may not be the best approach, and I may
 move in a different direction in the future. I will be creating my own dataset of these metrics via these functions.
 """
+
+keys_to_extract = [
+    "danceability",
+    "energy",
+    "loudness",
+    "mode",
+    "speechiness",
+    "acousticness",
+    "instrumentalness",
+    "liveness",
+    "valence",
+    "tempo",
+]
 
 
 def find_album(name, year):
@@ -65,18 +77,11 @@ def weighted_averaging(dictionary, popularity):
     return weighted_average
 
 
-# def album_data_mean(dict_list):
-#     mean_dict = {}
-#     for key in dict_list[0].keys():
-#         mean_dict[key] = sum(d[key] for d in dict_list) / len(dict_list)
-#     return mean_dict
-
-
-def extract_keys(track_data, keys_to_extract):
+def extract_keys(track_data, keys):
     j = 0
     edited_list = []
     while j < len(track_data):
-        res = dict(filter(lambda item: item[0] in keys_to_extract, track_data[j].items()))
+        res = dict(filter(lambda item: item[0] in keys, track_data[j].items()))
         edited_list.append(res)
         j += 1
     return edited_list
@@ -93,13 +98,24 @@ def make_entry(name, year, keys):
     return entry_df
 
 
-def bulk_entry(list, keys):
+def bulk_entry(album_list, keys):
     new_rows = pd.DataFrame()
     i = 0
-    while i < len(list):
-        name = list[i]["name"]
-        year = list[i]["year"]
+    while i < len(album_list):
+        name = album_list[i]["name"]
+        year = album_list[i]["year"]
         data = make_entry(name, year, keys)
         new_rows = pd.concat([new_rows, data], axis=0)
         i += 1
     return new_rows
+
+
+def add_albums(album_list, filename):
+    added_rows = bulk_entry(album_list, keys_to_extract)
+    df_existing = pd.read_csv(filename)
+    df_updated = pd.concat([df_existing, added_rows], ignore_index=True)
+    df_updated.drop_duplicates(
+        subset=["album_id"], inplace=True, ignore_index=True
+    )  # E: line too long (80 > 79 characters)
+    df_updated.reset_index(drop=True, inplace=True)
+    df_updated.to_csv(filename, index=False)
