@@ -5,14 +5,6 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from album_dataset_creation import add_albums
 
-album_input = [
-    {"name": "Patsy Hangdog", "year": 2020},
-    {"name": "Myth", "year": 2023},
-    {"name": "All Bitches Die", "year": 2018},
-    {"name": "A flame my love, a frequency", "year": 2017},
-    {"name": "Sunbather", "year": 2013},
-]
-
 # TO DO: MAKE IT EASIER TO RUN THIS WITHOUT DOING A LIST OF DICTIONARIES IF POSSIBLE? TOO USER UNFRIENDLY + HARD TO RUN WITH ARGPARSER.
 # Note for your own purposes, you would have to put in your own CLIENT_ID and CLIENT_SECRET.
 # To Do: Look into using global variables or whatever they're called to call these without showing the world
@@ -51,10 +43,21 @@ def main() -> None:
         )
     )
 
-    #    album_list = args.albums
+    n = int(input("How many albums are you uploading: "))  # W: Missing module docstring
+    album_dict = {}
+    album_list = []
+    for i in range(n):
+        album = input("Enter album name and year in the format Name - Year:")
+        try:
+            name, year = album.split(" - ")
+        except ValueError:
+            name, year = album.split("-")
+        album_dict = {"name": name.strip(), "year": int(year.strip())}
+        album_list.append(album_dict)
+
     dataset = args.data
     if args.task == "add_entries":
-        add_albums(album_input, dataset)
+        add_albums(album_list, dataset)
     elif args.task == "recommend":
         pass
 
