@@ -41,7 +41,7 @@ def find_album(name, year):
     album_data["year"] = [year]
     album_data["album_id"] = [album_id]
     album_data["artist"] = results["artists"][0]["name"]
-
+    print(f"{name} has been found.")
     return pd.DataFrame(album_data)
 
 

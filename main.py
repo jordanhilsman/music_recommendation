@@ -59,9 +59,9 @@ def main() -> None:
             album_list.append(album_dict)
 
     else:
-        input_dataset = pd.read_csv(args.from_csv)
+        input_dataset = pd.read_csv(args.from_csv, usecols=["Album", "Year"])
         input_dataset.dropna(inplace=True)
-        input_dataset['Year'] = input_dataset['Date'].str[-4:].astype(int)
+#        input_dataset['Year'] = input_dataset['Date'].str[-4:].astype(int)
         album_dict = {}
         album_list = []
         for index, row in input_dataset.iterrows():
