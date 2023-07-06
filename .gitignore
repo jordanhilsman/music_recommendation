@@ -25,6 +25,12 @@
 [._]ss[a-gi-z]
 [._]sw[a-p]
 
+
+# PyCache
+
+**/__pycache__/
+*.pyc  
+
 # Session
 Session.vim
 Sessionx.vim
