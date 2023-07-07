@@ -5,15 +5,15 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from album_dataset_creation import add_albums
 from misc_work import *
-# TO DO: MAKE IT EASIER TO RUN THIS WITHOUT DOING A LIST OF DICTIONARIES IF POSSIBLE? TOO USER UNFRIENDLY + HARD TO RUN WITH ARGPARSER.
+
 # Note for your own purposes, you would have to put in your own CLIENT_ID and CLIENT_SECRET.
-# To Do: Look into using global variables or whatever they're called to call these without showing the world
-# my client secret/id.
-#os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
-#os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
+# TO DO : Make it so that if the album is already present in .csv file, it doesn't have to query spotify or rym.
+# os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
+# os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
 
 os.environ["SPOTIFY_CLIENT_ID"] = "38aa6dbab43f46898cea5c5a82ba8b24"
 os.environ["SPOTIFY_CLIENT_SECRET"] = "88c7f081441f4e5d90c9df23984469ac"
+
 
 def parse_args() -> argparse.Namespace:
     """Parses command line arguments."""
@@ -33,7 +33,11 @@ def parse_args() -> argparse.Namespace:
         help="Directory of the dataset of album information for recommendations or additions to be made.",
     )
 
-    parser.add_argument("--from_csv", type=str, help="Directory of CSV if you're choosing to do that form of upload. Default False, and prompts inputs.")
+    parser.add_argument(
+        "--from_csv",
+        type=str,
+        help="Directory of CSV if you're choosing to do that form of upload. Default False, and prompts inputs.",
+    )
 
     return parser.parse_args()
 
@@ -63,7 +67,7 @@ def main() -> None:
     else:
         input_dataset = pd.read_csv(args.from_csv, usecols=["Album", "Year"])
         input_dataset.dropna(inplace=True)
-#        input_dataset['Year'] = input_dataset['Date'].str[-4:].astype(int)
+        #        input_dataset['Year'] = input_dataset['Date'].str[-4:].astype(int)
         album_dict = {}
         album_list = []
         for index, row in input_dataset.iterrows():
