@@ -4,7 +4,7 @@ import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from album_dataset_creation import add_albums
-
+from misc_work import *
 # TO DO: MAKE IT EASIER TO RUN THIS WITHOUT DOING A LIST OF DICTIONARIES IF POSSIBLE? TOO USER UNFRIENDLY + HARD TO RUN WITH ARGPARSER.
 # Note for your own purposes, you would have to put in your own CLIENT_ID and CLIENT_SECRET.
 # To Do: Look into using global variables or whatever they're called to call these without showing the world
@@ -76,7 +76,8 @@ def main() -> None:
     if args.task == "add_entries":
         add_albums(album_list, dataset)
     elif args.task == "recommend":
-        pass
+        new_rows = add_albums(album_list, dataset)
+        get_recommendations(new_rows, dataset)
 
 
 if __name__ == "__main__":

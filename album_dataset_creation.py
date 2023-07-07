@@ -3,9 +3,13 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
 from collections import defaultdict
+import ast
 
+from rymscraper import rymscraper, RymUrl
 #os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
 #os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
+
+network = rymscraper.RymNetwork()
 
 os.environ["SPOTIFY_CLIENT_ID"] = "38aa6dbab43f46898cea5c5a82ba8b24"
 os.environ["SPOTIFY_CLIENT_SECRET"] = "88c7f081441f4e5d90c9df23984469ac"
@@ -114,12 +118,43 @@ def bulk_entry(album_list, keys):
     return new_rows
 
 
+#def add_albums(album_list, filename):
+#    added_rows = bulk_entry(album_list, keys_to_extract)
+#    df_existing = pd.read_csv(filename)
+#    df_updated = pd.concat([df_existing, added_rows], ignore_index=True)
+#    df_updated.drop_duplicates(
+#        subset=["album_id"], inplace=True, ignore_index=True
+#    )  # E: line too long (80 > 79 characters)
+#    df_updated.reset_index(drop=True, inplace=True)
+#    df_updated.to_csv(filename, index=False)
+#
+#def get_genre(album
+
 def add_albums(album_list, filename):
-    added_rows = bulk_entry(album_list, keys_to_extract)
+    added_rows = pd.DataFrame()
+    i=0
+    while i < len(album_list):
+        name = album_list[i]["name"]
+        year = album_list[i]["year"]
+        data = make_entry(name, year, keys_to_extract)
+        artist = data['artist'].values[0]
+        album = data['name'].values[0]      
+        full_name = f"{artist} - {album}"
+        album_info = network.get_album_infos(name=full_name)
+        album_df = pd.DataFrame([album_info])
+        genres = album_df['Genres'].tolist()
+        genres = [genre.strip() for genre in genres[0].split('\n')]
+        genres = [genre.split(', ') for genre in genres]
+        genres = [genre for sublist in genres for genre in sublist]
+#        genres = ast.literal_eval(genres)
+              
+        data["genres"] = [genres]
+        added_rows = pd.concat([added_rows, data], axis=0)
+        i += 1
+
     df_existing = pd.read_csv(filename)
     df_updated = pd.concat([df_existing, added_rows], ignore_index=True)
-    df_updated.drop_duplicates(
-        subset=["album_id"], inplace=True, ignore_index=True
-    )  # E: line too long (80 > 79 characters)
+    df_updated.drop_duplicates(inplace=True)
     df_updated.reset_index(drop=True, inplace=True)
     df_updated.to_csv(filename, index=False)
+    return added_rows
