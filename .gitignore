@@ -30,7 +30,7 @@
 
 **/__pycache__/
 *.pyc  
-
+.cache
 # Session
 Session.vim
 Sessionx.vim
@@ -42,5 +42,10 @@ tags
 # Persistent undo
 [._]*.un~
 
+# Ignore csv and json
+*.csv
+*.json
+*.csv#
+*.txt
 # End of https://www.toptal.com/developers/gitignore/api/vim,linux
 

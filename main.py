@@ -9,9 +9,11 @@ from album_dataset_creation import add_albums
 # Note for your own purposes, you would have to put in your own CLIENT_ID and CLIENT_SECRET.
 # To Do: Look into using global variables or whatever they're called to call these without showing the world
 # my client secret/id.
-os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
-os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
+#os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
+#os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
 
+os.environ["SPOTIFY_CLIENT_ID"] = "38aa6dbab43f46898cea5c5a82ba8b24"
+os.environ["SPOTIFY_CLIENT_SECRET"] = "88c7f081441f4e5d90c9df23984469ac"
 
 def parse_args() -> argparse.Namespace:
     """Parses command line arguments."""
