@@ -58,22 +58,21 @@ def main() -> None:
         for i in range(n):
             album = input("Enter album name and year in the format Name - Year:")
             try:
-                name, year = album.split(" - ")
+                name, artist = album.split(" - ")
             except ValueError:
-                name, year = album.split("-")
-            album_dict = {"name": name.strip(), "year": int(year.strip())}
+                name, artist = album.split("-")
+            album_dict = {"name": name.strip(), "artist": (artist.strip())}
             album_list.append(album_dict)
 
     else:
-        input_dataset = pd.read_csv(args.from_csv, usecols=["Album", "Year"])
+        input_dataset = pd.read_csv(args.from_csv, usecols=["Album", "Last Name"])
         input_dataset.dropna(inplace=True)
-        #        input_dataset['Year'] = input_dataset['Date'].str[-4:].astype(int)
         album_dict = {}
         album_list = []
         for index, row in input_dataset.iterrows():
             name = row["Album"]
-            year = row["Year"]
-            album_dict = {"name": name, "year": year}
+            artist = row["Last Name"]
+            album_dict = {"name": name, "artist": artist}
             album_list.append(album_dict)
 
     dataset = args.data
@@ -81,6 +80,9 @@ def main() -> None:
         add_albums(album_list, dataset)
     elif args.task == "recommend":
         new_rows = add_albums(album_list, dataset)
+        df = pd.read_csv(dataset)
+        df.drop_duplicates(inplace=True, ignore_index=False)
+        df.to_csv(dataset, index=False)
         get_recommendations(new_rows, dataset)
 
 
