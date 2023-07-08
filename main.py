@@ -4,8 +4,8 @@ import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from album_dataset_creation import add_albums
+from recommendation import get_recommendations
 
-from recommendation import *
 # Note for your own purposes, you would have to put in your own CLIENT_ID and CLIENT_SECRET.
 # TO DO : Make it so that if the album is already present in .csv file, it doesn't have to query spotify or rym.
 # os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
@@ -26,7 +26,6 @@ def parse_args() -> argparse.Namespace:
         choices=task_choices,
         required=True,
     )
-    #    parser.add_argument("--albums", type=str, nargs="+", help="List of albums in the format 'Album Name - Album Year', or a predefined variable name")
     parser.add_argument(
         "--data",
         type=str,
@@ -45,12 +44,6 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
 
-    sp = spotipy.Spotify(
-        auth_manager=SpotifyClientCredentials(
-            client_id=os.environ["SPOTIFY_CLIENT_ID"],
-            client_secret=os.environ["SPOTIFY_CLIENT_SECRET"],
-        )
-    )
     if args.from_csv is None:
         n = int(input("How many albums are you uploading: "))  # W: Missing module docstring
         album_dict = {}

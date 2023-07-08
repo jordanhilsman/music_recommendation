@@ -1,18 +1,6 @@
-import argparse  # W: Missing module docstring
-import os
 import pandas as pd
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
-from album_dataset_creation import add_albums
-from scipy.spatial.distance import cdist
-import ast
 import numpy as np
-import pandas as pd  # W: Missing module docstring
-from numpy.linalg import norm
-df = pd.read_csv("spotify_album_data.csv")
-
-os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
-os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
+from scipy.spatial.distance import cdist
 
 
 keys_to_extract = [
@@ -27,22 +15,22 @@ keys_to_extract = [
     "valence",
     "tempo",
 ]
-n_songs = 5
+n_songs = 10
+
+
+def top_5_recs(average_input, full_dataframe, method):
+    distances = cdist(average_input[keys_to_extract], full_dataframe[keys_to_extract], method)
+    full_index = list(np.argsort(distances)[:, :n_songs][0])
+    reccs = full_dataframe.iloc[full_index]
+    reccs = reccs[["artist", "name"]]
+    return reccs
+
 
 def get_recommendations(album_list, full_dataframe):
     full_dataframe = pd.read_csv(full_dataframe)
     averages = album_list.loc[:, keys_to_extract].mean()
     average_row = pd.DataFrame([averages])
-    distances_nosubset = cdist(
-        average_row[keys_to_extract], full_dataframe[keys_to_extract], "cosine"
-    )  # E: Undefined variable 'average_row' # E: undefined name 'average_row' # E: line too long (87 > 79 characters)
-    
-    index2 = list(np.argsort(distances_nosubset)[:, :n_songs][0])
-    recs_nosubset = full_dataframe.iloc[index2]
-    recs_nosubset = recs_nosubset[["artist", "name"]]  # E: missing whitespace after ','
-    print(f"Recommendations based on cosine distance:\n {recs_nosubset}")
-    canberra_distances = cdist(average_row[keys_to_extract], full_dataframe[keys_to_extract], "canberra")
-    index = list(np.argsort(canberra_distances)[:, :n_songs][0])
-    recs = full_dataframe.iloc[index]
-    recs = recs[["artist","name"]]
-    print(f"Recommendations based on canberra distance:\n {recs}")
+    cosine_recs = top_5_recs(average_row, full_dataframe, "cosine")
+    print(f"Recommendations based on cosine distance:\n {cosine_recs}")
+    canberra_recs = top_5_recs(average_row, full_dataframe, "canberra")
+    print(f"Recommendations based on canberra distance:\n {canberra_recs}")

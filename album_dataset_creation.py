@@ -10,8 +10,8 @@ os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
 os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
 
 
-#os.environ["SPOTIFY_CLIENT_ID"] = "38aa6dbab43f46898cea5c5a82ba8b24"
-#os.environ["SPOTIFY_CLIENT_SECRET"] = "88c7f081441f4e5d90c9df_existing23984469ac"
+# os.environ["SPOTIFY_CLIENT_ID"] = "38aa6dbab43f46898cea5c5a82ba8b24"
+# os.environ["SPOTIFY_CLIENT_SECRET"] = "88c7f081441f4e5d90c9df_existing23984469ac"
 
 
 sp = spotipy.Spotify(
@@ -41,13 +41,13 @@ keys_to_extract = [
 
 def find_album(name, artist):
     album_data = defaultdict()
-    results = sp.search(q="album: {} artist: {}".format(name, artist), limit=1) 
+    results = sp.search(q="album: {} artist: {}".format(name, artist), limit=1)
     results = results["tracks"]["items"][0]
     album_id = results["album"]["id"]
     album_data["name"] = [name]
     album_data["artist"] = [artist]
     album_data["album_id"] = [album_id]
-    album_data["year"] = results["album"]['release_date'][0:4]
+    album_data["year"] = results["album"]["release_date"][0:4]
     print(f"{name} has been found.")
     return pd.DataFrame(album_data)
 
@@ -104,6 +104,7 @@ def make_entry(name, artist, keys):
     entry_df_existing = pd.concat([album_info, album_df_existing], axis=1)
     return entry_df_existing
 
+
 def add_albums(album_list, filename):
     added_rows = pd.DataFrame()
     df_existing = pd.read_csv(filename)
@@ -113,7 +114,7 @@ def add_albums(album_list, filename):
         artist = album_list[i]["artist"]
         present = df_existing[(df_existing["name"] == name) & (df_existing["artist"] == artist)]
         if not present.empty:
-            added_rows = pd.concat([added_rows, present], axis = 0)
+            added_rows = pd.concat([added_rows, present], axis=0)
         else:
             data = make_entry(name, artist, keys_to_extract)
             added_rows = pd.concat([added_rows, data], axis=0)
