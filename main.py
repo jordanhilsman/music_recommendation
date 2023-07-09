@@ -8,11 +8,11 @@ from recommendation import get_recommendations
 
 # Note for your own purposes, you would have to put in your own CLIENT_ID and CLIENT_SECRET.
 # TO DO : Make it so that if the album is already present in .csv file, it doesn't have to query spotify or rym.
-# os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
-# os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
+os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
+os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
 
-os.environ["SPOTIFY_CLIENT_ID"] = "38aa6dbab43f46898cea5c5a82ba8b24"
-os.environ["SPOTIFY_CLIENT_SECRET"] = "88c7f081441f4e5d90c9df23984469ac"
+#os.environ["SPOTIFY_CLIENT_ID"] = "38aa6dbab43f46898cea5c5a82ba8b24"
+#os.environ["SPOTIFY_CLIENT_SECRET"] = "88c7f081441f4e5d90c9df23984469ac"
 
 
 def parse_args() -> argparse.Namespace:
@@ -49,7 +49,7 @@ def main() -> None:
         album_dict = {}
         album_list = []
         for i in range(n):
-            album = input("Enter album name and year in the format Name - Year:")
+            album = input("Enter album name and year in the format Album Name - Arist:")
             try:
                 name, artist = album.split(" - ")
             except ValueError:
