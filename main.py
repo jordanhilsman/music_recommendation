@@ -58,13 +58,13 @@ def main() -> None:
             album_list.append(album_dict)
 
     else:
-        input_dataset = pd.read_csv(args.from_csv, usecols=["Album", "Last Name"])
+        input_dataset = pd.read_csv(args.from_csv, usecols=["Album", "Artist"])
         input_dataset.dropna(inplace=True)
         album_dict = {}
         album_list = []
         for index, row in input_dataset.iterrows():
             name = row["Album"]
-            artist = row["Last Name"]
+            artist = row["Artist"]
             album_dict = {"name": name, "artist": artist}
             album_list.append(album_dict)
 

@@ -74,13 +74,17 @@ def weighted_averaging(dictionary, popularity):
         for key, value in dictionary.items():
             if key not in weighted_sum:
                 weighted_sum[key] = 0
-            weighted_sum[key] += value * weight
-        total_weight += weight
-
+            if weight != 0:
+                weighted_sum[key] += value * weight
+                total_weight += weight
+            else:
+                weighted_sum[key] += value
     weighted_average = {}
     for key, value in weighted_sum.items():
-        weighted_average[key] = value / total_weight
-
+        if total_weight != 0:
+            weighted_average[key] = value / total_weight
+        else:
+            weighted_average[key] = value
     return weighted_average
 
 
