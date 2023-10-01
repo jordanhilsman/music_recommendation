@@ -6,6 +6,11 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from album_dataset_creation import add_albums
 from recommendation import get_recommendations
 
+"""
+Author: Jordan Hilsman
+"""
+
+
 # Note for your own purposes, you would have to put in your own CLIENT_ID and CLIENT_SECRET.
 # TO DO : Make it so that if the album is already present in .csv file, it doesn't have to query spotify or rym.
 os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
