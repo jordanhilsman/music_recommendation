@@ -17,4 +17,4 @@ $ python main.py --task recommend --data spotify_album_data.csv
 ```
 This will prompt you for an amount of albums you would like to be given recommendations from.
 Albums should be input in the form: 
-"ALBUM NAME - ARIST NAME"
+"ALBUM NAME - ARTIST NAME"
