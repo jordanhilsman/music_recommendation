@@ -1,8 +1,6 @@
 import argparse
 import os
 import pandas as pd
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
 from album_dataset_creation import add_albums
 from recommendation import get_recommendations
 
@@ -54,7 +52,7 @@ def main() -> None:
         album_dict = {}
         album_list = []
         for i in range(n):
-            album = input("Enter album name and year in the format Album Name - Arist:")
+            album = input("Enter album name and year in the format Album Name - Artist:")
             try:
                 name, artist = album.split(" - ")
             except ValueError:

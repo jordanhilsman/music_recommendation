@@ -1,14 +1,7 @@
-import argparse  # W: Missing module docstring
 import os
 import pandas as pd
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
-from album_dataset_creation import add_albums
 from scipy.spatial.distance import cdist
-import ast
 import numpy as np
-import pandas as pd  # W: Missing module docstring
-from numpy.linalg import norm
 
 df = pd.read_csv("spotify_album_data.csv")
 
