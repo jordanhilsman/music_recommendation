@@ -1,5 +1,10 @@
 # music_recommendation
 Where I am working on a program to recommend albums based on Spotify album listening history.
+
+##NOTE:
+As of November 27th, 2024 this project has been made obsolete due to changes in the Spotify API that deprecated the endpoint
+for retrieving audio features from tracks.
+
 ## Setup
 
 ```console
