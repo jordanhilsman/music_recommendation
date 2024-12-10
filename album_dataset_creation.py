@@ -8,8 +8,12 @@ from collections import defaultdict
 # os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
 
 
-os.environ["SPOTIFY_CLIENT_ID"] = "38aa6dbab43f46898cea5c5a82ba8b24"
-os.environ["SPOTIFY_CLIENT_SECRET"] = "88c7f081441f4e5d90c9df23984469ac"
+#os.environ["SPOTIFY_CLIENT_ID"] = "38aa6dbab43f46898cea5c5a82ba8b24"
+#os.environ["SPOTIFY_CLIENT_SECRET"] = "88c7f081441f4e5d90c9df23984469ac"
+
+
+os.environ["SPOTIFY_CLIENT_ID"] = "80d1f79fa72c4d3bb7a6b2a2ac7f5c20"
+os.environ["SPOTIFY_CLIENT_SECRET"] = "1e1d7c2df6ed4d6a99e55bd88433f4e7"
 
 
 sp = spotipy.Spotify(
