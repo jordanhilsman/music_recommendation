@@ -4,21 +4,12 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
 from collections import defaultdict
 
-# os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
-# os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
-
-
-#os.environ["SPOTIFY_CLIENT_ID"] = "38aa6dbab43f46898cea5c5a82ba8b24"
-#os.environ["SPOTIFY_CLIENT_SECRET"] = "88c7f081441f4e5d90c9df23984469ac"
-
-
-os.environ["SPOTIFY_CLIENT_ID"] = "80d1f79fa72c4d3bb7a6b2a2ac7f5c20"
-os.environ["SPOTIFY_CLIENT_SECRET"] = "1e1d7c2df6ed4d6a99e55bd88433f4e7"
-
+spotipy_cid = os.getenv("SPOTIFY_CLIENT_ID")
+spotipy_csecret = os.getenv("SPOTIFY_CLIENT_SECRET")
 
 sp = spotipy.Spotify(
     auth_manager=SpotifyClientCredentials(
-        client_id=os.environ["SPOTIFY_CLIENT_ID"], client_secret=os.environ["SPOTIFY_CLIENT_SECRET"]
+        client_id=spotipy_cid, client_secret=spotipy_csecret
     )
 )
 """

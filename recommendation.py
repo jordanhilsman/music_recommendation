@@ -5,9 +5,8 @@ import numpy as np
 
 df = pd.read_csv("spotify_album_data.csv")
 
-os.environ["SPOTIFY_CLIENT_ID"] = "9236160482de4e9784a90b999ae169b7"
-os.environ["SPOTIFY_CLIENT_SECRET"] = "b82e4df8039b466ead3a20765efa1b64"
-
+spotipy_cid = os.getenv("SPOTIFY_CLIENT_ID")
+spotipy_csecret = os.getenv("SPOTIFY_CLIENT_SECRET")
 
 keys_to_extract = [
     "danceability",
