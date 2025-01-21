@@ -1,4 +1,5 @@
 import argparse
+import json
 import os
 import pandas as pd
 from album_dataset_creation import add_albums
@@ -8,13 +9,11 @@ from recommendation import get_recommendations
 Author: Jordan Hilsman
 """
 
-
 # Note for your own purposes, you would have to put in your own CLIENT_ID and CLIENT_SECRET.
 # TO DO : Make it so that if the album is already present in .csv file, it doesn't have to query spotify or rym.
 spotipy_cid = os.getenv("SPOTIFY_CLIENT_ID")
 spotipy_csecret = os.getenv("SPOTIFY_CLIENT_SECRET")
 
-import json
 
 with open('albums_list.json', 'r') as f:
     e = json.load(f)
